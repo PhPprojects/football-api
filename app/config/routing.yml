@@ -1,4 +1,4 @@
-callenge:
+challenge:
     resource: "@ChallengeBundle/Resources/config/routing.yml"
     prefix:   /
 
