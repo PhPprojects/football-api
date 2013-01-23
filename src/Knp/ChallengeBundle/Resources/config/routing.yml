@@ -1,0 +1,3 @@
+callenge_homepage:
+    pattern:  /
+    defaults: { _controller: CallengeBundle:Default:index }

@@ -1,0 +1,7 @@
+parameters:
+#    callenge.example.class: Knp\ChallengeBundle\Example
+
+services:
+#    callenge.example:
+#        class: %callenge.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
