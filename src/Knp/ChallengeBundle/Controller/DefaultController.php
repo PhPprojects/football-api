@@ -8,6 +8,6 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('CallengeBundle:Default:index.html.twig');
+        return $this->render('ChallengeBundle:Default:index.html.twig');
     }
 }
