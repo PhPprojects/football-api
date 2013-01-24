@@ -1,7 +1,10 @@
 parameters:
 #    challenge.example.class: Knp\ChallengeBundle\Example
+    challenge.helper.class: Knp\ChallengeBundle\Helper
 
 services:
 #    challenge.example:
 #        class: %challenge.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    challenge.helper:
+        class: %challenge.helper.class%

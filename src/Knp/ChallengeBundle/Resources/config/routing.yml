@@ -1,3 +1,7 @@
 challenge_homepage:
     pattern:  /
     defaults: { _controller: ChallengeBundle:Default:index }
+
+challenge_import:
+    pattern: /import
+    defaults: { _controller: ChallengeBundle:Default:import }
