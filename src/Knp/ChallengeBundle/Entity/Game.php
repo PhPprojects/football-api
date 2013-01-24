@@ -92,6 +92,11 @@ class Game
         return $this->date;
     }
 
+    public function getDateString()
+    {
+        return $this->date->format('Y-m-d');
+    }
+
     /**
      * Set homeTeam
      *
@@ -182,5 +187,10 @@ class Game
     public function getAwayTeamScore()
     {
         return $this->awayTeamScore;
+    }
+
+    public function getScore()
+    {
+        return $this->homeTeamScore.'-'.$this->awayTeamScore;
     }
 }

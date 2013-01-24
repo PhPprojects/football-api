@@ -1,1 +1,30 @@
-Hello UserName!
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="flash-notice">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+<form class="form-search" action="{{ path('challenge_homepage') }}" method="get">
+    <input type="search" value="{{ app.request.get('teamName') }}" name="teamName" class="input-medium search-query">
+    <button type="submit" class="btn">Search</button>
+</form>
+<table>
+    <caption>The games of premier league</caption>
+    <thead>
+    <tr>
+        <th>Home team</th>
+        <th>Away team</th>
+        <th>Date</th>
+        <th>Score</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for game in games %}
+    <tr>
+        <td>{{ game.getHomeTeam.getName }}</td>
+        <td>{{ game.getAwayTeam.getName }}</td>
+        <td>{{ game.getDateString }}</td>
+        <td>{{ game.getScore }}</td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>

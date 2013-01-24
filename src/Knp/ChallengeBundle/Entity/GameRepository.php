@@ -4,6 +4,7 @@ namespace Knp\ChallengeBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 use Knp\ChallengeBundle\Entity\Game;
+use Knp\ChallengeBundle\Entity\Team;
 
 /**
  * GameRepository
@@ -22,5 +23,29 @@ class GameRepository extends EntityRepository
                 'date' => $game->getDate(),
             ));
         }
+        return false;
+    }
+
+    public function getAllGamesByTeam(Team $team)
+    {
+        $qb = $this->createQueryBuilder('g');
+        $qb->Where('g.homeTeam = :team');
+        $qb->orWhere('g.awayTeam = :team');
+        $qb->setParameter('team', $team);
+        $qb->orderBy('g.date','desc');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
+    public function getAllGames()
+    {
+        $qb = $this->createQueryBuilder('g');
+        $qb->orderBy('g.date','desc');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
     }
 }
