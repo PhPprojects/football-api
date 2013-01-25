@@ -4,6 +4,7 @@ namespace Knp\ChallengeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\SerializerBundle\Annotation\Exclude;
 
 /**
  * Team
@@ -19,6 +20,7 @@ class Team
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Exclude
      */
     private $id;
 
@@ -33,6 +35,7 @@ class Team
      * @var
      *
      * @ORM\OneToMany(targetEntity="Game", mappedBy="homeTeam")
+     * @Exclude
      */
     private $homeTeamGames;
 
@@ -40,8 +43,21 @@ class Team
      * @var
      *
      * @ORM\OneToMany(targetEntity="Game", mappedBy="awayTeam")
+     * @Exclude
      */
     private $awayTeamGames;
+
+    private $played;
+
+    private $wins;
+
+    private $draws;
+
+    private $losses;
+
+    private $points;
+
+    private $place;
 
     public function __construct ()
     {
@@ -112,5 +128,71 @@ class Team
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setDraws($draws)
+    {
+        $this->draws = $draws;
+    }
+
+    public function getDraws()
+    {
+        return $this->draws;
+    }
+
+    public function setLosses($losses)
+    {
+        $this->losses = $losses;
+    }
+
+    public function getLosses()
+    {
+        return $this->losses;
+    }
+
+    public function setPlace($place)
+    {
+        $this->place = $place;
+    }
+
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    public function setPlayed($played)
+    {
+        $this->played = $played;
+    }
+
+    public function getPlayed()
+    {
+        return $this->played;
+    }
+
+    public function setPoints($points)
+    {
+        $this->points = $points;
+    }
+
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    public function setWins($wins)
+    {
+        $this->wins = $wins;
+    }
+
+    public function getWins()
+    {
+        return $this->wins;
+    }
+
+    public function considerPoints()
+    {
+        $this->setPoints($this->getWins() * 3);
+        $this->setPoints($this->getPoints() + $this->getDraws());
     }
 }
