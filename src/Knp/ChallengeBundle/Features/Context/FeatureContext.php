@@ -52,22 +52,6 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
-     * @Given /^на сайт добавлены жанры:$/
-     */
-//    public function naSaitDobavlienyZhanry(TableNode $table)
-//    {
-//        $em = $this->getEntityManager();
-//
-//        foreach ($table->getHash() as $genreHash) {
-//            $game = new \Knp\ChallengeBundle\Entity\Game();
-//            game->setName($genreHash['name']);
-//
-//            $em->persist($genre);
-//        }
-//        $em->flush();
-//    }
-
-    /**
      * @Given /^there are teams:$/
      */
     public function thereAreTeams(TableNode $table)
