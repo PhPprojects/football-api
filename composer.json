@@ -26,7 +26,10 @@
         "behat/mink-selenium2-driver": "dev-master",
         "behat/mink-browserkit-driver": "dev-master",
         "behat/mink-sahi-driver": "@dev",
-        "misd/guzzle-bundle": "dev-master"
+        "misd/guzzle-bundle": "dev-master",
+
+        "friendsofsymfony/rest-bundle": "0.10.0",
+        "jms/serializer-bundle": ">=0.9,<=0.10"
     },
     "scripts": {
         "post-install-cmd": [
