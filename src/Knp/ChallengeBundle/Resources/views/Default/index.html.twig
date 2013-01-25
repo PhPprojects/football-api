@@ -5,7 +5,7 @@
 {% endfor %}
 <form class="form-search" action="{{ path('challenge_homepage') }}" method="get">
     <input type="search" value="{{ app.request.get('teamName') }}" name="teamName" class="input-medium search-query">
-    <button type="submit" class="btn">Search</button>
+    <button type="submit" title="submit" class="btn">Search</button>
 </form>
 <table>
     <caption>The games of premier league</caption>
