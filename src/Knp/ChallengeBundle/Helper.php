@@ -3,9 +3,77 @@
 namespace Knp\ChallengeBundle;
 
 use Guzzle\Http\Client;
+use Symfony\Component\DomCrawler\Crawler;
+use Knp\ChallengeBundle\Entity\Team;
+use Knp\ChallengeBundle\Entity\Game;
+use Doctrine\ORM\EntityManager;
 
 class Helper
 {
+    private $em;
+
+    public function __construct(EntityManager $entityManager)
+    {
+        $this->em = $entityManager;
+    }
+
+    public function fetchData()
+    {
+        // Walk through the pages
+        for ($page = 0; $matchesTable = $this->getContent($page); $page++) {
+            $crawler = new Crawler($matchesTable);
+
+            // Walk through the table
+            for ($tr=0; $tr < $crawler->filter('tbody > tr')->count(); $tr++) {
+                $game = new Game();
+
+                // Get date
+                $timestamp = $this->getTimestampFromTable($crawler, $tr);
+
+                $date = date('Y-m-d', $timestamp);
+                $date = new \DateTime($date);
+                $game->setDate($date);
+
+                // Home Team
+                $homeTeamName = $this->getTeamFromTable($crawler, $tr, 2);
+                $homeTeam = $this->em->getRepository('ChallengeBundle:Team')->findOneByName($homeTeamName);
+
+                if (!$homeTeam) {
+                    $homeTeam = new Team();
+                    $homeTeam->setName($homeTeamName);
+                    $this->em->persist($homeTeam);
+                }
+
+                $game->setHomeTeam($homeTeam);
+
+                // Score
+                $score = $this->getScoreFromTable($crawler, $tr);
+                $scoreArray = explode('-', $score);
+                $game->setHomeTeamScore(trim($scoreArray['0']));
+                $game->setAwayTeamScore(trim($scoreArray['1']));
+
+                // Away Team
+                $awayTeamName = $this->getTeamFromTable($crawler, $tr, 4);
+                $awayTeam = $this->em->getRepository('ChallengeBundle:Team')->findOneByName($awayTeamName);
+
+                if (!$awayTeam) {
+                    $awayTeam = new Team();
+                    $awayTeam->setName($awayTeamName);
+                    $this->em->persist($awayTeam);
+                }
+
+                $game->setAwayTeam($awayTeam);
+
+                if (!$this->em->getRepository('ChallengeBundle:Game')->existThisGame($game)) {
+                    $this->em->persist($game);
+                }
+
+                $this->em->flush();
+            }
+        }
+        return true;
+    }
+
     public function getContent($page)
     {
         if ($page != 0) {
@@ -24,5 +92,35 @@ class Helper
         }
 
         return $matchesTable;
+    }
+
+    private function getTimestampFromTable(Crawler $crawler, $tr)
+    {
+        return $crawler->filter('tbody > tr')
+            ->eq($tr)
+            ->filter('td')
+            ->eq(1)
+            ->filter('span')
+            ->attr('data-value');
+    }
+
+    private function getTeamFromTable(Crawler $crawler, $tr, $td)
+    {
+        return $crawler->filter('tbody > tr')
+            ->eq($tr)
+            ->filter('td')
+            ->eq($td)
+            ->filter('a')
+            ->attr('title');
+    }
+
+    private function getScoreFromTable(Crawler $crawler, $tr)
+    {
+        return $crawler->filter('tbody > tr')
+            ->eq($tr)
+            ->filter('td')
+            ->eq(3)
+            ->filter('a')
+            ->text();
     }
 }
