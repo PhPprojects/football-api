@@ -12,6 +12,6 @@ class DefaultControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/');
 
-        $this->assertTrue($crawler->filter('html:contains("Hello UserName")')->count() > 0);
+        $this->assertTrue($crawler->filter('html:contains("Home team")')->count() > 0);
     }
 }
