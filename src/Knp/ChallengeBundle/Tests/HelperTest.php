@@ -2,27 +2,11 @@
 
 namespace Knp\ChallengeBundle\Tests;
 
-use Guzzle\Http\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Knp\ChallengeBundle\Entity\Team;
-use Knp\ChallengeBundle\Entity\Game;
 
 class HelperTest extends \PHPUnit_Framework_TestCase
 {
-    public function testStub()
-    {
-        $stub = $this->getMockBuilder('Knp\ChallengeBundle\Helper')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $stub->expects($this->any())
-            ->method('getContent')
-            ->will($this->returnValue('foo'))
-        ;
-
-        $this->assertEquals('foo', $stub->getContent(6));
-    }
-
     /**
      * @dataProvider providerCmpTeam
      */
