@@ -1,6 +1,7 @@
-Feature: A HTML page with a list of all matches
-  A HTML input text allows filtering this list so that the list will only include matches where the
-  home team or the away team contains the text in the input box.
+Feature:
+  In order to see HTML page with a list of matches
+  As a user
+  I need to filtering list by team
 
   Background:
     Given there are teams:
