@@ -10,7 +10,6 @@ Feature:
       | 2  | Chelsea   |
       | 3  | Liverpool |
       | 4  | Everton   |
-#    Then show last response
     And there are games:
       | id | date       | homeTeamScore | awayTeamScore | homeTeamName | awayTeamName |
       | 1  | 2011-10-12	|      0        |      1        |    Arsenal   |   Chelsea    |
