@@ -19,17 +19,19 @@
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
+        "misd/guzzle-bundle": "dev-master",
+
+        "friendsofsymfony/rest-bundle": "0.10.0",
+        "jms/serializer-bundle": ">=0.9,<=0.10"
+    },
+    "require-dev": {
         "behat/behat": "@dev",
         "behat/mink": "@dev",
         "behat/symfony2-extension": "dev-master",
         "behat/mink-extension": "*",
         "behat/mink-selenium2-driver": "dev-master",
         "behat/mink-browserkit-driver": "dev-master",
-        "behat/mink-sahi-driver": "@dev",
-        "misd/guzzle-bundle": "dev-master",
-
-        "friendsofsymfony/rest-bundle": "0.10.0",
-        "jms/serializer-bundle": ">=0.9,<=0.10"
+        "behat/mink-sahi-driver": "@dev"
     },
     "scripts": {
         "post-install-cmd": [
