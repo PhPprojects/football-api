@@ -27,8 +27,9 @@ class ApiController extends FOSRestController
 
         //Set places
         $place = 1;
-        foreach ($aTeam as $team)
+        foreach ($aTeam as $team) {
             $aTeam[] = $team->setPlace($place++);
+        }
 
         $view = $this->view($aTeam, 200);
         $view->setFormat('json');
