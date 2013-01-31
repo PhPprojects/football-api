@@ -3,95 +3,74 @@
 namespace Knp\ChallengeBundle\Tests;
 
 use Symfony\Component\DomCrawler\Crawler;
-use Knp\ChallengeBundle\Entity\Team;
 
 class ImportSoccerWayTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @dataProvider providerCmpTeam
-     */
-    public function testCmpTeam($data, $result)
-    {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
-            ->disableOriginalConstructor()
-            ->setMethods(null)
-            ->getMock()
-        ;
-
-        $teamA = new Team();
-        $teamB = new Team();
-
-        $teamA->setPoints($data[0]);
-        $teamB->setPoints($data[1]);
-
-        $this->assertEquals($result, $helperMock->cmpTeam($teamA, $teamB));
-    }
-
     public function testGetContent()
     {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
+        $importSoccerWayMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
             ->disableOriginalConstructor()
             ->setMethods(null)
             ->getMock()
         ;
 
-        $this->assertContains('<td class="team team-b ">', $helperMock->getContent(0));
-        $this->assertContains('View events</a>', $helperMock->getContent(5));
-        $this->assertFalse($helperMock->getContent(100500));
+        $this->assertContains('<td class="team team-b ">', $importSoccerWayMock->getContent(0));
+        $this->assertContains('View events</a>', $importSoccerWayMock->getContent(5));
+        $this->assertFalse($importSoccerWayMock->getContent(100500));
     }
 
     public function testGetTimestampFromTable()
     {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
+        $importSoccerWayMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
-        $reflMethod = new \ReflectionMethod($helperMock, 'getTimestampFromTable');
+        $reflMethod = new \ReflectionMethod($importSoccerWayMock, 'getTimestampFromTable');
         $reflMethod->setAccessible(true);
 
         $crawler = new Crawler($this->simpleTableData());
 
-        $this->assertEquals('attrDataValueForTr0Td0Span', $reflMethod->invokeArgs($helperMock, array($crawler, 0)));
-        $this->assertEquals('attrDataValueForTr1Td0Span', $reflMethod->invokeArgs($helperMock, array($crawler, 1)));
-        $this->assertNotEquals('something', $reflMethod->invokeArgs($helperMock, array($crawler, 1)));
+        $this->assertEquals('attrDataValueForTr0Td0Span', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 0)));
+        $this->assertEquals('attrDataValueForTr1Td0Span', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 1)));
+        $this->assertNotEquals('something', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 1)));
     }
 
     public function testGetTeamFromTable()
     {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
+        $importSoccerWayMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
-        $reflMethod = new \ReflectionMethod($helperMock, 'getTeamFromTable');
+        $reflMethod = new \ReflectionMethod($importSoccerWayMock, 'getTeamFromTable');
         $reflMethod->setAccessible(true);
 
         $crawler = new Crawler($this->simpleTableData());
 
-        $this->assertEquals('attrTitleForTr0Td0A', $reflMethod->invokeArgs($helperMock, array($crawler, 0, 0)));
-        $this->assertEquals('attrTitleForTr0Td1A', $reflMethod->invokeArgs($helperMock, array($crawler, 0, 1)));
-        $this->assertEquals('attrTitleForTr0Td2A', $reflMethod->invokeArgs($helperMock, array($crawler, 0, 2)));
-        $this->assertEquals('attrTitleForTr0Td3A', $reflMethod->invokeArgs($helperMock, array($crawler, 0, 3)));
-        $this->assertEquals('attrTitleForTr1Td2A', $reflMethod->invokeArgs($helperMock, array($crawler, 1, 2)));
-        $this->assertNotEquals('something', $reflMethod->invokeArgs($helperMock, array($crawler, 1, 3)));
+        $this->assertEquals('attrTitleForTr0Td0A', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 0, 0)));
+        $this->assertEquals('attrTitleForTr0Td1A', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 0, 1)));
+        $this->assertEquals('attrTitleForTr0Td2A', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 0, 2)));
+        $this->assertEquals('attrTitleForTr0Td3A', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 0, 3)));
+        $this->assertEquals('attrTitleForTr1Td2A', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 1, 2)));
+        $this->assertNotEquals('something', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 1, 3)));
     }
 
     public function testGetScoreFromTable()
     {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
+        $importSoccerWayMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
             ->disableOriginalConstructor()
             ->getMock()
         ;
 
-        $reflMethod = new \ReflectionMethod($helperMock, 'getScoreFromTable');
+        $reflMethod = new \ReflectionMethod($importSoccerWayMock, 'getScoreFromTable');
         $reflMethod->setAccessible(true);
 
         $crawler = new Crawler($this->simpleTableData());
 
-        $this->assertEquals('textForTr0Td3A', $reflMethod->invokeArgs($helperMock, array($crawler, 0)));
-        $this->assertEquals('textForTr1Td3A', $reflMethod->invokeArgs($helperMock, array($crawler, 1)));
-        $this->assertNotEquals('something', $reflMethod->invokeArgs($helperMock, array($crawler, 1)));
+        $this->assertEquals('textForTr0Td3A', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 0)));
+        $this->assertEquals('textForTr1Td3A', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 1)));
+        $this->assertNotEquals('something', $reflMethod->invokeArgs($importSoccerWayMock, array($crawler, 1)));
     }
 
     protected function simpleTableData()
@@ -151,15 +130,5 @@ class ImportSoccerWayTest extends \PHPUnit_Framework_TestCase
             </body>
         </html>
         ";
-    }
-
-    public function providerCmpTeam()
-    {
-        return array(
-            array(array(5, 6), 1),
-            array(array(6, 5), -1),
-            array(array(0, 3), 1),
-            array(array(4, 0), -1),
-        );
     }
 }
