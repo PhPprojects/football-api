@@ -25,6 +25,7 @@ services:
             class: %challenge.game_manager.class%
             arguments:
                 entityManager: "@doctrine.orm.entity_manager"
+                standingsManager: "@challenge.standings_manager"
 
     challenge.standings_manager:
                 class: %challenge.standings_manager.class%

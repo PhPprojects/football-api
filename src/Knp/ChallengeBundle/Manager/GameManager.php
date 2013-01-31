@@ -4,14 +4,18 @@ namespace Knp\ChallengeBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Knp\ChallengeBundle\Entity\Game;
+use Knp\ChallengeBundle\Manager\StandingsManager;
 
 class GameManager
 {
     protected $em;
 
-    public function __construct(EntityManager $entityManager)
+    protected $standingsManager;
+
+    public function __construct(EntityManager $entityManager, StandingsManager $standingsManager)
     {
         $this->em = $entityManager;
+        $this->standingsManager = $standingsManager;
     }
 
     public function setGameIfNotExist($date, $homeTeam, $awayTeam, $scoreArray)
