@@ -14,17 +14,7 @@ use Knp\ChallengeBundle\Entity\Team;
  */
 class GameRepository extends EntityRepository
 {
-    public function existThisGame(Game $game)
-    {
-        if ($game->getHomeTeam()->getId() && $game->getAwayTeam()->getId()) {
-            return $this->findOneBy(array(
-                'homeTeam' => $game->getHomeTeam(),
-                'awayTeam' => $game->getAwayTeam(),
-                'date' => $game->getDate(),
-            ));
-        }
-        return false;
-    }
+
 
     public function getAllGamesByTeam(Team $team)
     {

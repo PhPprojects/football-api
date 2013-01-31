@@ -2,6 +2,7 @@ parameters:
 #    challenge.example.class: Knp\ChallengeBundle\Example
     challenge.import_soccer_way.class: Knp\ChallengeBundle\ImportSoccerWay
     challenge.team_manager.class: Knp\ChallengeBundle\Manager\TeamManager
+    challenge.game_manager.class: Knp\ChallengeBundle\Manager\GameManager
 
 services:
 #    challenge.example:
@@ -12,8 +13,14 @@ services:
         arguments:
             entityManager: "@doctrine.orm.entity_manager"
             teamManager: "@challenge.team_manager"
+            gameManager: "@challenge.game_manager"
 
     challenge.team_manager:
         class: %challenge.team_manager.class%
         arguments:
             entityManager: "@doctrine.orm.entity_manager"
+
+    challenge.game_manager:
+            class: %challenge.game_manager.class%
+            arguments:
+                entityManager: "@doctrine.orm.entity_manager"
