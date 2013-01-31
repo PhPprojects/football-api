@@ -18,7 +18,7 @@ class ApiController extends FOSRestController
         $from = $paramFetcher->get('from');
         $to = $paramFetcher->get('to');
 
-        $standings = $this->getDoctrine()->getRepository('ChallengeBundle:Standings')->getStandings($from, $to);
+        $standings = $this->getDoctrine()->getRepository('ChallengeBundle:Standings')->findStandingsFromPeriod($from, $to);
         if (empty($standings)) {
             // @ToDo Set standings
             $standings = $this->get('challenge.standings_manager')->getStandings($from, $to);

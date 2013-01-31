@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class StandingsRepository extends EntityRepository
 {
-    public function getStandings($dateFrom, $dateTo)
+    public function findStandingsFromPeriod($dateFrom, $dateTo)
     {
         $qb = $this->createQueryBuilder('st');
         $qb->Where('st.dateFrom = :dateFrom')
