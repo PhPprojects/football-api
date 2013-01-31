@@ -15,7 +15,19 @@ class StandingsRepository extends EntityRepository
                 'dateFrom' => $dateFrom,
                 'dateTo' => $dateTo,
             ))
-            ->orderBy('st.place','desc');
+            ->orderBy('st.place','asc');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
+    public function findStandingsForDate($date)
+    {
+        $qb = $this->createQueryBuilder('st');
+        $qb->Where('st.dateFrom <= :date')
+            ->andWhere('st.dateTo >= :date')
+            ->setParameter('date', $date);
 
         $query = $qb->getQuery();
 
