@@ -19,10 +19,10 @@ class GameRepository extends EntityRepository
     public function getAllGamesByTeam(Team $team)
     {
         $qb = $this->createQueryBuilder('g');
-        $qb->Where('g.homeTeam = :team');
-        $qb->orWhere('g.awayTeam = :team');
-        $qb->setParameter('team', $team);
-        $qb->orderBy('g.date','desc');
+        $qb->Where('g.homeTeam = :team')
+            ->orWhere('g.awayTeam = :team')
+            ->setParameter('team', $team)
+            ->orderBy('g.date','desc');
 
         $query = $qb->getQuery();
 
