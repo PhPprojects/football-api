@@ -60,6 +60,10 @@ class StandingsManager
         $standingsMember->setDateFrom(new \DateTime($from));
         $standingsMember->setDateTo(new \DateTime($to));
         $standingsMember->setTeam($team);
+        $standingsMember->setWins(0);
+        $standingsMember->setDraws(0);
+        $standingsMember->setLosses(0);
+        $standingsMember->setPlayed(0);
 
         foreach ($team->getHomeTeamGames() as $game) {
             if ($game->getDateString() >= $from && $game->getDateString() <= $to) {
