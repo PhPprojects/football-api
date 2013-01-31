@@ -47,18 +47,6 @@ class Team
      */
     private $awayTeamGames;
 
-    private $played;
-
-    private $wins;
-
-    private $draws;
-
-    private $losses;
-
-    private $points;
-
-    private $place;
-
     public function __construct ()
     {
         $this->homeTeamGames = new ArrayCollection();
@@ -128,71 +116,5 @@ class Team
     public function getName()
     {
         return $this->name;
-    }
-
-    public function setDraws($draws)
-    {
-        $this->draws = $draws;
-    }
-
-    public function getDraws()
-    {
-        return $this->draws;
-    }
-
-    public function setLosses($losses)
-    {
-        $this->losses = $losses;
-    }
-
-    public function getLosses()
-    {
-        return $this->losses;
-    }
-
-    public function setPlace($place)
-    {
-        $this->place = $place;
-    }
-
-    public function getPlace()
-    {
-        return $this->place;
-    }
-
-    public function setPlayed($played)
-    {
-        $this->played = $played;
-    }
-
-    public function getPlayed()
-    {
-        return $this->played;
-    }
-
-    public function setPoints($points)
-    {
-        $this->points = $points;
-    }
-
-    public function getPoints()
-    {
-        return $this->points;
-    }
-
-    public function setWins($wins)
-    {
-        $this->wins = $wins;
-    }
-
-    public function getWins()
-    {
-        return $this->wins;
-    }
-
-    public function considerPoints()
-    {
-        $this->setPoints($this->getWins() * 3);
-        $this->setPoints($this->getPoints() + $this->getDraws());
     }
 }
