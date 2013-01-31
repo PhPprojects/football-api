@@ -8,7 +8,7 @@ use Knp\ChallengeBundle\Entity\Team;
 use Knp\ChallengeBundle\Entity\Game;
 use Doctrine\ORM\EntityManager;
 
-class Helper
+class ImportSoccerWay
 {
     private $em;
 

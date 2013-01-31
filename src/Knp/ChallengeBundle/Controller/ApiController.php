@@ -20,10 +20,10 @@ class ApiController extends FOSRestController
         $data = $this->getDoctrine()->getRepository('ChallengeBundle:Team')->findAll();
 
         foreach ($data as $team) {
-            $aTeam[] = $this->get('challenge.helper')->getStandingsData($team, $from, $to);
+            $aTeam[] = $this->get('challenge.import_soccer_way')->getStandingsData($team, $from, $to);
         }
 
-        usort($aTeam, array($this->get('challenge.helper'), "cmpTeam"));
+        usort($aTeam, array($this->get('challenge.import_soccer_way'), "cmpTeam"));
 
         //Set places
         $place = 1;

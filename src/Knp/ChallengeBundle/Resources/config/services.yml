@@ -1,12 +1,12 @@
 parameters:
 #    challenge.example.class: Knp\ChallengeBundle\Example
-    challenge.helper.class: Knp\ChallengeBundle\Helper
+    challenge.import_soccer_way.class: Knp\ChallengeBundle\ImportSoccerWay
 
 services:
 #    challenge.example:
 #        class: %challenge.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
-    challenge.helper:
-        class: %challenge.helper.class%
+    challenge.import_soccer_way:
+        class: %challenge.import_soccer_way.class%
         arguments:
             entityManager: "@doctrine.orm.entity_manager"

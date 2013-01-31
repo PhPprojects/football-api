@@ -5,14 +5,14 @@ namespace Knp\ChallengeBundle\Tests;
 use Symfony\Component\DomCrawler\Crawler;
 use Knp\ChallengeBundle\Entity\Team;
 
-class HelperTest extends \PHPUnit_Framework_TestCase
+class ImportSoccerWayTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider providerCmpTeam
      */
     public function testCmpTeam($data, $result)
     {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\Helper')
+        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
             ->disableOriginalConstructor()
             ->setMethods(null)
             ->getMock()
@@ -29,7 +29,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
 
     public function testGetContent()
     {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\Helper')
+        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
             ->disableOriginalConstructor()
             ->setMethods(null)
             ->getMock()
@@ -42,7 +42,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTimestampFromTable()
     {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\Helper')
+        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -59,7 +59,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTeamFromTable()
     {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\Helper')
+        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
             ->disableOriginalConstructor()
             ->getMock()
         ;
@@ -79,7 +79,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
 
     public function testGetScoreFromTable()
     {
-        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\Helper')
+        $helperMock = $this->getMockBuilder('Knp\ChallengeBundle\ImportSoccerWay')
             ->disableOriginalConstructor()
             ->getMock()
         ;

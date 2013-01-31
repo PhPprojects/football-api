@@ -24,7 +24,7 @@ class FetchCommand extends ContainerAwareCommand
         if ($input->getOption('debug')) {
 
         }
-        $helper = $this->getContainer()->get('challenge.helper');
+        $helper = $this->getContainer()->get('challenge.import_soccer_way');
 
         if ($helper->fetchData()) {
             $output->writeln('Fetch data success!');
