@@ -10,7 +10,7 @@ use JMS\SerializerBundle\Annotation\Exclude;
  * Team
  *
  * @ORM\Table(name="team")
- * @ORM\Entity(repositoryClass="Knp\ChallengeBundle\Entity\TeamRepository")
+ * @ORM\Entity
  */
 class Team
 {
