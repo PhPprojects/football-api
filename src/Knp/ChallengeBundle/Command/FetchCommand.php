@@ -20,10 +20,9 @@ class FetchCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $importService = $this->getContainer()->get('challenge.import_soccer_way');
 
-        $helper = $this->getContainer()->get('challenge.import_soccer_way');
-
-        if ($helper->fetchData()) {
+        if ($importService->fetchData()) {
             $output->writeln('Fetch data success!');
         }
         else {
