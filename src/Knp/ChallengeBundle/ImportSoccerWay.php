@@ -7,14 +7,22 @@ use Symfony\Component\DomCrawler\Crawler;
 use Knp\ChallengeBundle\Entity\Team;
 use Knp\ChallengeBundle\Entity\Game;
 use Doctrine\ORM\EntityManager;
+use Knp\ChallengeBundle\Manager\TeamManager;
+use Knp\ChallengeBundle\Manager\GameManager;
 
 class ImportSoccerWay
 {
     private $em;
 
-    public function __construct(EntityManager $entityManager)
+    private $teamManager;
+
+    private $gameManager;
+
+    public function __construct(EntityManager $entityManager, TeamManager $teamManager, GameManager $gameManager)
     {
         $this->em = $entityManager;
+        $this->teamManager = $teamManager;
+        $this->gameManager = $gameManager;
     }
 
     public function fetchData()
@@ -25,50 +33,24 @@ class ImportSoccerWay
 
             // Walk through the table
             for ($tr=0; $tr < $crawler->filter('tbody > tr')->count(); $tr++) {
-                $game = new Game();
 
-                // Get date
+                // Date
                 $timestamp = $this->getTimestampFromTable($crawler, $tr);
-
-                $date = date('Y-m-d', $timestamp);
-                $date = new \DateTime($date);
-                $game->setDate($date);
+                $date = $this->getObjDateFromTimestamp('Y-m-d', $timestamp);
 
                 // Home Team
                 $homeTeamName = $this->getTeamFromTable($crawler, $tr, 2);
-                $homeTeam = $this->em->getRepository('ChallengeBundle:Team')->findOneByName($homeTeamName);
-
-                if (!$homeTeam) {
-                    $homeTeam = new Team();
-                    $homeTeam->setName($homeTeamName);
-                    $this->em->persist($homeTeam);
-                }
-
-                $game->setHomeTeam($homeTeam);
+                $homeTeam = $this->teamManager->getTeamByName($homeTeamName);
 
                 // Score
                 $score = $this->getScoreFromTable($crawler, $tr);
-                $scoreArray = explode('-', $score);
-                $game->setHomeTeamScore(trim($scoreArray['0']));
-                $game->setAwayTeamScore(trim($scoreArray['1']));
+                $scoreArray = $this->getScoreArray($score);
 
                 // Away Team
                 $awayTeamName = $this->getTeamFromTable($crawler, $tr, 4);
-                $awayTeam = $this->em->getRepository('ChallengeBundle:Team')->findOneByName($awayTeamName);
+                $awayTeam = $this->teamManager->getTeamByName($awayTeamName);
 
-                if (!$awayTeam) {
-                    $awayTeam = new Team();
-                    $awayTeam->setName($awayTeamName);
-                    $this->em->persist($awayTeam);
-                }
-
-                $game->setAwayTeam($awayTeam);
-
-                if (!$this->em->getRepository('ChallengeBundle:Game')->existThisGame($game)) {
-                    $this->em->persist($game);
-                }
-
-                $this->em->flush();
+                $this->gameManager->setGameIfNotExist($date, $homeTeam, $awayTeam, $scoreArray);
             }
         }
         return true;
@@ -141,6 +123,23 @@ class ImportSoccerWay
         }
 
         return $matchesTable;
+    }
+
+    private function getObjDateFromTimestamp($format ,$timestamp)
+    {
+        $date = date($format, $timestamp);
+        return new \DateTime($date);
+    }
+
+    private function getScoreArray($score)
+    {
+        $scoreArray = explode('-', $score);
+        $homeTeamScore = trim($scoreArray['0']);
+        $awayTeamScore = trim($scoreArray['1']);
+        return array(
+            'homeScore' => $homeTeamScore,
+            'awayScore' => $awayTeamScore,
+        );
     }
 
     private function getTimestampFromTable(Crawler $crawler, $tr)
