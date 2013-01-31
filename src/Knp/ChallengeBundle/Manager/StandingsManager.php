@@ -30,6 +30,29 @@ class StandingsManager
         return $standings;
     }
 
+    public function setStandings($standings)
+    {
+        foreach ($standings as $standingsMember) {
+            $this->em->persist($standingsMember);
+        }
+
+        $this->em->flush();
+
+        return true;
+    }
+
+    public function removeStandings($date)
+    {
+        $standings = $this->em->getRepository('ChallengeBundle:Standings')->findStandingsForDate($date);
+
+        foreach ($standings as $standingsMember)
+        {
+            $this->em->remove($standingsMember);
+        }
+
+        $this->em->flush();
+    }
+
     public function getStandingsData(Team $team, $from, $to)
     {
         $standingsMember = new Standings();
@@ -74,11 +97,6 @@ class StandingsManager
         $standingsMember->setPoints($points);
 
         return $standingsMember;
-    }
-
-    public function setStandings($standings)
-    {
-        return true;
     }
 
     public function cmpTeam(Standings $a, Standings $b)
