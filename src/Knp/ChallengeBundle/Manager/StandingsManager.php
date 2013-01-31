@@ -57,8 +57,8 @@ class StandingsManager
     {
         $standingsMember = new Standings();
 
-        $standingsMember->setDateFrom($from);
-        $standingsMember->setDateTo($to);
+        $standingsMember->setDateFrom(new \DateTime($from));
+        $standingsMember->setDateTo(new \DateTime($to));
         $standingsMember->setTeam($team);
 
         foreach ($team->getHomeTeamGames() as $game) {
