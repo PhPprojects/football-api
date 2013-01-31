@@ -28,6 +28,8 @@ class GameManager
         $game->setAwayTeamScore($scoreArray['awayScore']);
 
         if (!$this->isExistThisGame($game)) {
+            $this->standingsManager->removeStandings($date);
+
             $this->em->persist($game);
             $this->em->flush();
         }
