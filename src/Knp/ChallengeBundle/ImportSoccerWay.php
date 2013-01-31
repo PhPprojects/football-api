@@ -56,55 +56,6 @@ class ImportSoccerWay
         return true;
     }
 
-    public function cmpTeam(Team $a, Team $b)
-    {
-        $ap = $a->getPoints();
-        $bp = $b->getPoints();
-        if ($ap == $bp) {
-            return 0;
-        }
-        return ($ap > $bp) ? -1 : +1;
-    }
-
-    public function getStandingsData(Team $team, $from, $to)
-    {
-        foreach ($team->getHomeTeamGames() as $game) {
-            if ($game->getDateString() >= $from && $game->getDateString() <= $to) {
-                if ($game->getHomeTeamScore() < $game->getAwayTeamScore()) {
-                    $team->setLosses($team->getLosses() + 1);
-                }
-                elseif ($game->getHomeTeamScore() > $game->getAwayTeamScore()) {
-                    $team->setWins($team->getWins() + 1);
-                }
-                else {
-                    $team->setDraws($team->getDraws() + 1);
-                }
-
-                $team->setPlayed($team->getPlayed()+1);
-            }
-        }
-
-        foreach ($team->getAwayTeamGames() as $game) {
-            if ($game->getDateString() >= $from && $game->getDateString() <= $to) {
-                if ($game->getAwayTeamScore() < $game->getHomeTeamScore()) {
-                    $team->setLosses($team->getLosses() + 1);
-                }
-                elseif ($game->getAwayTeamScore() > $game->getHomeTeamScore()) {
-                    $team->setWins($team->getWins() + 1);
-                }
-                else {
-                    $team->setDraws($team->getDraws() + 1);
-                }
-
-                $team->setPlayed($team->getPlayed()+1);
-            }
-        }
-
-        $team->considerPoints();
-
-        return $team;
-    }
-
     public function getContent($page)
     {
         if ($page != 0) {

@@ -5,6 +5,7 @@ namespace Knp\ChallengeBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use Symfony\Component\HttpFoundation\Response;
 
 class ApiController extends FOSRestController
 {
@@ -17,21 +18,17 @@ class ApiController extends FOSRestController
         $from = $paramFetcher->get('from');
         $to = $paramFetcher->get('to');
 
-        $data = $this->getDoctrine()->getRepository('ChallengeBundle:Team')->findAll();
+        $standings = $this->getDoctrine()->getRepository('ChallengeBundle:Standings')->getStandings($from, $to);
+        if (empty($standings)) {
+            // @ToDo Set standings
+            $standings = $this->get('challenge.standings_manager')->getStandings($from, $to);
 
-        foreach ($data as $team) {
-            $aTeam[] = $this->get('challenge.import_soccer_way')->getStandingsData($team, $from, $to);
+            if (!$this->get('challenge.standings_manager')->setStandings($standings)) {
+                return new Response('Can\'t save data', 400);
+            }
         }
 
-        usort($aTeam, array($this->get('challenge.import_soccer_way'), "cmpTeam"));
-
-        //Set places
-        $place = 1;
-        foreach ($aTeam as $team) {
-            $aTeam[] = $team->setPlace($place++);
-        }
-
-        $view = $this->view($aTeam, 200);
+        $view = $this->view($standings, 200);
         $view->setFormat('json');
 
         return $this->handleView($view);
