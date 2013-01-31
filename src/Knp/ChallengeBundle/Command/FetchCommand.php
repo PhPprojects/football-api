@@ -15,15 +15,12 @@ class FetchCommand extends ContainerAwareCommand
         $this
             ->setName('fetch:data')
             ->setDescription('That fetches data from Soccerway Premier League')
-            ->addOption('debug', null, InputOption::VALUE_NONE, 'If set, will be view debug info')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->getOption('debug')) {
 
-        }
         $helper = $this->getContainer()->get('challenge.import_soccer_way');
 
         if ($helper->fetchData()) {
